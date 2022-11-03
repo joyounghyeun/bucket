@@ -154,12 +154,12 @@
                         let comment = rows[i]['comment']
                         let num = rows[i]['num']
                         let del = rows[i]['del']
-                        let teamName = rows[i]['teamName']
+                        let writer = rows[i]['writer']
 
                         let temp_html =``
                         if (del ==0) {
                             temp_html = ` <li>
-                                        <h2>⭐  ${teamName}</h2><h2> ${comment}</h2>
+                                        <h2>⭐  ${writer}</h2><h2> ${comment}</h2>
                                 <button onclick="del_comment(${num})" type="button" class="btn btn-outline-primary">삭제</button>
                             </li>`
                         }
@@ -173,17 +173,19 @@
         }
 
         function save_comment(){
+
             let comment = $('#comment').val()
             let writer = $('#writer').val()
             let teamName = $('#teamName').val()
 
+            console.log(comment,writer,teamName)
 
 
 
             $.ajax({
                 type: "POST",
                 url: "/comment",
-                data: {comment_give:comment,teamName_give:'조용현',writer_give:writer},
+                data: {comment_give:comment,writer_give:writer,teamName_give:'조용현'},
                 success: function (response) {
                     alert(response["msg"])
                     window.location.reload()
