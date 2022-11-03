@@ -155,9 +155,11 @@
                         let num = rows[i]['num']
                         let del = rows[i]['del']
                         let writer = rows[i]['writer']
+                        let teamName = rows[i]['teamName']
 
                         let temp_html =``
-                        if (del ==0) {
+
+                        if (teamName =='조용현'&& del == 0) {
                             temp_html = ` <li>
                                         <h2>⭐  ${writer}</h2><h2> ${comment}</h2>
                                 <button onclick="del_comment(${num})" type="button" class="btn btn-outline-primary">삭제</button>
@@ -178,7 +180,6 @@
             let writer = $('#writer').val()
             let teamName = $('#teamName').val()
 
-            console.log(comment,writer,teamName)
 
 
 
