@@ -2,8 +2,10 @@ from flask import Flask, render_template, request, jsonify
 app = Flask(__name__)
 
 from pymongo import MongoClient
-client = MongoClient('mongodb+srv://jyh9017:1234@cluster0.o9uxjjp.mongodb.net/?retryWrites=true&w=majority')
-db = client.dbsprata
+import certifi
+ca = certifi.where()
+client = MongoClient('mongodb+srv://jyh9017:1234@cluster0.o9uxjjp.mongodb.net/?retryWrites=true&w=majority', tlsCAFile=ca)
+db = client.dbsparta
 
 @app.route('/')
 def home():
@@ -12,7 +14,7 @@ def home():
 @app.route("/bucket", methods=["POST"])
 def bucket_post():
     bucket_receive = request.form['bucket_give']
-
+    name_receive = request.form['name_give']
     bucket_list = list(db.bucket.find({}, {'_id': False}))
     count = len(bucket_list) + 1
 
@@ -21,7 +23,8 @@ def bucket_post():
     doc = {
         'num':count,
         'bucket':bucket_receive,
-        'done':0
+        'done':0,
+        'name':name_receive
     }
 
     db.bucket.insert_one(doc)
@@ -30,13 +33,16 @@ def bucket_post():
 
 @app.route("/bucket/done", methods=["POST"])
 def bucket_done():
-    sample_receive = request.form['sample_give']
-    print(sample_receive)
-    return jsonify({'msg': 'POST(완료) 연결 완료!'})
+    num_receive = request.form['num_give']
+    db.bucket.update_one({'num': int(num_receive)}, {'$set': {'done': 1}})
+    return jsonify({'msg': '삭제 완료!'})
 
 @app.route("/bucket", methods=["GET"])
 def bucket_get():
-    return jsonify({'msg': 'GET 연결 완료!'})
+    bucket_list = list(db.bucket.find({}, {'_id': False}))
+
+    return jsonify({'buckets': bucket_list})
 
 if __name__ == '__main__':
    app.run('0.0.0.0', port=5000, debug=True)
+
