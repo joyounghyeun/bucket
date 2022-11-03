@@ -110,7 +110,7 @@
         .profile{
             margin-left: 70px;
         }
-        .name{
+        .teamName{
             width: 150px;
         }
         .btn-outline-primary{
@@ -154,12 +154,12 @@
                         let comment = rows[i]['comment']
                         let num = rows[i]['num']
                         let del = rows[i]['del']
-                        let name = rows[i]['name']
+                        let teamName = rows[i]['teamName']
 
                         let temp_html =``
                         if (del ==0) {
                             temp_html = ` <li>
-                                        <h2>⭐  ${name}</h2><h2> ${comment}</h2>
+                                        <h2>⭐  ${teamName}</h2><h2> ${comment}</h2>
                                 <button onclick="del_comment(${num})" type="button" class="btn btn-outline-primary">삭제</button>
                             </li>`
                         }
@@ -175,13 +175,15 @@
         function save_comment(){
             let comment = $('#comment').val()
             let writer = $('#writer').val()
-console.log(comment,writer)
+            let teamName = $('#teamName').val()
+
+
 
 
             $.ajax({
                 type: "POST",
                 url: "/comment",
-                data: {comment_give:comment,name_give:'조용현',writer_give:writer},
+                data: {comment_give:comment,teamName_give:'조용현',writer_give:writer},
                 success: function (response) {
                     alert(response["msg"])
                     window.location.reload()
@@ -239,7 +241,7 @@ console.log(comment,writer)
 <hr size="5"; color="gray">
 <div class="mybox">
     <div class="mybucket">
-        <div class="name">
+        <div class="teamName">
             <input id="writer" class="form-control" type="text" placeholder="이름">
         </div>
         <input id="comment" class="form-control" type="text" placeholder="방명록을 입력해주세요">

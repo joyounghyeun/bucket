@@ -17,8 +17,7 @@ def home():
 def comment_post():
     comment_receive = request.form['comment_give']
     writer_receive = request.form['writer_give']
-    name_receive = request.form['name_give']
-    # teamName_receive = request.form['teamName_give']
+    teamName_receive = request.form['teamName_give']
 
     comment_list = list(db.comment.find({}, {'_id': False}))
     count = len(comment_list) + 1
@@ -28,8 +27,7 @@ def comment_post():
         'comment': comment_receive,
         'del': 0,
         'writer': writer_receive,
-        'name': name_receive,
-        # 'teamName': teamName_receive
+        'teamName': teamName_receive
     }
     db.comment.insert_one(doc)
 
