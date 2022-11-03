@@ -78,7 +78,7 @@
             margin-left: 50px;
             margin-top: 20px;
 
-        background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://img.freepik.com/free-photo/the-red-or-white-cat-i-on-white-studio_155003-13189.jpg?w=740&t=st=1667213772~exp=1667214372~hmac=56e2eeb386e12caad068121f86bd44bb0963ec9beb96d8e36eb0c293b81d9de8");
+        background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://github.com/joyounghyeun/bucket/blob/main/KakaoTalk_Photo_2022-11-03-14-16-55.jpeg?raw=true");
         background-position: center;
         background-size: cover;
 
@@ -116,6 +116,27 @@
         .btn-outline-primary{
             width: 100px;
         }
+        .fadein{
+  font-size: medium;
+  position: relative;
+  overflow: hidden;
+  animation: fadein 7s ease-in-out;
+
+
+}
+
+
+@keyframes fadein{
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+
+}
     </style>
     <script>
         $(document).ready(function () {
@@ -185,7 +206,10 @@
 </head>
 <body>
 <div class="mypic">
+    <div class="fadein">
     <h1>조용현의 상세 프로필</h1>
+</div>
+
 
 </div>
 <div class="wrap">
