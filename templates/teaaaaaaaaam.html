@@ -69,7 +69,7 @@
             margin-right: auto;
             margin-bottom: 0px;
         }
-        .mybox > li > h2.done {
+        .mybox > li > h2.del {
             text-decoration:line-through
         }
         .mytitle {
@@ -140,47 +140,48 @@
     </style>
     <script>
         $(document).ready(function () {
-            show_bucket();
+            show_comment();
         });
-        function show_bucket(){
+        function show_comment(){
             $.ajax({
                 type: "GET",
-                url: "/bucket",
+                url: "/comment",
                 data: {},
                 success: function (response) {
-                    let rows = response['buckets']
+
+                    let rows = response['comments']
                     for (let i = 0; i < rows.length; i++) {
-                        let bucket = rows[i]['bucket']
+                        let comment = rows[i]['comment']
                         let num = rows[i]['num']
-                        let done = rows[i]['done']
+                        let del = rows[i]['del']
                         let name = rows[i]['name']
 
                         let temp_html =``
-                        if (done ==0) {
+                        if (del ==0) {
                             temp_html = ` <li>
-                                        <h2>⭐  ${name}</h2><h2> ${bucket}</h2>
-                                <button onclick="done_bucket(${num})" type="button" class="btn btn-outline-primary">삭제</button>
+                                        <h2>⭐  ${name}</h2><h2> ${comment}</h2>
+                                <button onclick="del_comment(${num})" type="button" class="btn btn-outline-primary">삭제</button>
                             </li>`
                         }
 
 
-                        $('#bucket-list').append(temp_html)
+                        $('#comment-list').append(temp_html)
 
                     }
                 }
             });
         }
 
-        function save_bucket(){
-            let bucket = $('#bucket').val()
-            let name = $('#name').val()
-
+        function save_comment(){
+            let comment = $('#comment').val()
+            let writer = $('#writer').val()
+console.log(comment,writer)
 
 
             $.ajax({
                 type: "POST",
-                url: "/bucket",
-                data: {bucket_give:bucket,name_give:name},
+                url: "/comment",
+                data: {comment_give:comment,name_give:'조용현',writer_give:writer},
                 success: function (response) {
                     alert(response["msg"])
                     window.location.reload()
@@ -189,10 +190,10 @@
                 }
             });
         }
-        function done_bucket(num){
+        function del_comment(num){
             $.ajax({
                 type: "POST",
-                url: "/bucket/done",
+                url: "/comment/del",
                 data: { num_give:num },
                 success: function (response) {
                     alert(response["msg"])
@@ -239,14 +240,14 @@
 <div class="mybox">
     <div class="mybucket">
         <div class="name">
-            <input id="name" class="form-control" type="text" placeholder="이름">
+            <input id="writer" class="form-control" type="text" placeholder="이름">
         </div>
-        <input id="bucket" class="form-control" type="text" placeholder="방명록을 입력해주세요">
-        <button onclick="save_bucket()" type="button" class="btn btn-outline-primary">등록하기</button>
+        <input id="comment" class="form-control" type="text" placeholder="방명록을 입력해주세요">
+        <button onclick="save_comment()" type="button" class="btn btn-outline-primary">등록하기</button>
     </div>
 
 </div>
-<div class="mybox" id="bucket-list">
+<div class="mybox" id="comment-list">
 </div>
 </body>
 </html>
